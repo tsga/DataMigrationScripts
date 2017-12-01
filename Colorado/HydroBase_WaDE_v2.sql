@@ -1,3 +1,5 @@
+---Copy and paste the entire script below to a new SQL Query script window in SQL Server. Then execute it.		
+ ---last updated Dec 1, 2017 by Adel Abdallah
 /*
 The script below uses the HydroBase db to extract and prepare all the view tables for WaDE.
 Full description of the logic of the script and what it does can be found in the Word Doc named: 
