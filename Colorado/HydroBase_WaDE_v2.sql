@@ -1,6 +1,3 @@
---Copy and paste the entire script below to a new SQL Query script window in SQL Server. Then execute it.
---last updated August 11, 2017 by Adel Abdallah
-
 /*
 The script below uses the HydroBase db to extract and prepare all the view tables for WaDE.
 Full description of the logic of the script and what it does can be found in the Word Doc named: 
@@ -637,13 +634,15 @@ SELECT
 [wd], 
 [wdid],
 [str_name],
-	[irr_year]
+[irr_year]
 /*2009 is hard coded here to get the report data after 2009*/
     FROM dbo.vw_HBGuest_StructureAnnualWC WHERE irr_year > 2009 
 
 GROUP BY wd, wdid, str_name, irr_year
 
 GO
+
+
 /*8. [DETAIL_DIVERSION]*/
 USE [HydroBase_DIVx]
 GO
@@ -662,16 +661,29 @@ CREATE VIEW [dbo].[vw_WADE_DETAIL_DIVERSION]
 AS
 SELECT DISTINCT CAST('CODWR' AS varchar(10)) AS "ORGANIZATION_ID",
 	CAST([irr_year] AS varchar(35))  AS "REPORT_ID",
-	CONCAT(CAST('DDIV000' AS varchar(60)), [wd]) AS "ALLOCATION_ID",
-	CAST([wdid] AS varchar(35)) AS "DIVERSION_ID",
-	CAST([str_name] AS varchar(255)) AS "DIVERSION_NAME",
+	CONCAT(CAST('DDIV000' AS varchar(60)), a.[wd]) AS "ALLOCATION_ID",
+	CAST(a.[wdid] AS varchar(35)) AS "DIVERSION_ID",
+	CAST(a.[str_name] AS varchar(255)) AS "DIVERSION_NAME",
 	CAST('42' AS varchar(2)) AS "STATE",
-	CAST([wd] AS varchar(5)) AS "REPORTING_UNIT_ID",
+	CAST(a.[wd] AS varchar(5)) AS "REPORTING_UNIT_ID",
 	CAST(NULL AS varchar(5)) AS "COUNTY_FIPS",
 	CAST(NULL AS varchar(12)) AS "HUC",
-	CAST(NULL AS varchar(35)) AS "WFS_FEATURE_REF"
+	CAST(NULL AS varchar(35)) AS "WFS_FEATURE_REF",
+	
+	-- New columns added for the updated WaDE schema and WaterML
+	CAST(b.[latdecdeg] AS varchar(35)) AS LAT_DD,
+	CAST(b.[longdecdeg] AS varchar(35)) AS LONG_DD,
+	
+	-- New columns added for the updated WaDE schema (empty for now)
+	CAST(NULL AS varchar(35)) AS EPSG_ID,
+	CAST(NULL AS varchar(35)) AS NHD_STATUS,
+	CAST(NULL AS varchar(35)) AS NHD_VERSION,
+	CAST(NULL AS varchar(35)) AS NHD_UPDATE_DATE,
+	CAST(NULL AS varchar(35)) AS NHD_REACH,
+	CAST(NULL AS varchar(35)) AS NHD_MEASURE
+	
 
-FROM      dbo.vw_HBGuest_StructureAnnualWC_wade
+FROM      dbo.vw_HBGuest_StructureAnnualWC_wade a LEFT JOIN dbo.vw_HBGuest_Structure b ON a.[wdid]=b.[wdid] 
 		
 GO
 
