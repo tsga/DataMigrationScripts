@@ -17,13 +17,15 @@ GO
 --The temporary table below creates a column with a year value. 
 --Then all the script below uses this value dynamically in all the views
 
+
 DROP TABLE IF EXISTS dbo.Temp_ReportYearExracted
 
 CREATE TABLE dbo.Temp_ReportYearExracted (
    Year varchar(4) not null)
 
+-- MAKE SURE TO CHANGE THIS YEAR VALUE TO WHAT YOU WANT. The script extracts data for all the years below it
 INSERT INTO dbo.Temp_ReportYearExracted (Year)
-VALUES ('2016');
+VALUES ('2017');
 
 GO
 /* 1. [vw_CDSS_NetAmts_wade] */
