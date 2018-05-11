@@ -1,4 +1,4 @@
-# Documentation of steps used to prepar and load data into WaDE 
+# Documentation of steps used to prepare and load data into WaDE 
 
 The steps below describe how we mapped and prepared the data from a flat file excel sheet into CSV files ready to be loaded into a WaDE database. The steps are manual in an effort to test and demo this process and future work should consider automating it using script or SQL.
 
@@ -23,12 +23,12 @@ The mapping results is here: [Mappings_to_WaDE.xlsx][2]
 
 [2]:https://github.com/WSWCWaterDataExchange/DataMigrationScripts/tree/master/Alaska/Prepareation_files
 
-## Decisions we made in data preperation  
+## Decisions we made in data preparation  
 1. We excluded the permits and their data which have missing HUC values (HUC is important as a unique identifier of the allocation location). Out of 55 total unique permits, 15 of them did not have HUC associated with them
 2. Both the TOTAL_PERMIT_QTY (i.e., water right) and QUANTITY (actually reported value) are reported in monthly values. However, after some analysis, we discovered that the  TOTAL_PERMIT_QTY is very possibly has originated from an annual value which was divided equally among the months in the table. Therefore, we calculated the annual value by multiplying the average monthly value across all reported months by 12. We kept the QUANTITY value as monthly data. 
 3. We found that one ALLOCATION_ID may have multiple unique SOURCE_NAME where each source has its own TOTAL_PERMIT_QTY. We used the WATER_SOURCE_ID as the DETAIL_SEQ_NO D_ALLOCATION_FLOW table to keep track of each source allocation amount within each permit file.  We used the RPT_MONTH as the 
 ACTUAL_SEQ_NO to keep track of the monthly values for the actual water use data within one annual permit. 
-4. We discovered seven completely duplicated records in the D_ALLOCATION_ACTUAL table and we deleted them. Duplication is not allowed in WaDE. We filtered the duplicate rows and [this file][6] reports both the orignal with duplicates and the new filtered one
+4. We discovered seven completely duplicated records in the D_ALLOCATION_ACTUAL table and we deleted them. Duplication is not allowed in WaDE. We filtered the duplicate rows and [this file][6] reports both the original with duplicates and the new filtered one
 
 [6]: https://github.com/WSWCWaterDataExchange/DataMigrationScripts/blob/master/Alaska/csv_files_ready_for_WaDE/duplicate_allocation_actual.xlsx
 
@@ -46,7 +46,7 @@ The source included codes under "FILE_TYPE" which are the legal status values. T
 4. Others: METHODS,  LU_SOURCE_TYPE, LU_FRESH_SALINE_INDICATOR, and LU_UNITS are straight forward for creating unique values and their identifiers.  
 
 ## Manipulated data file
-This [excel file][3] is a copy of the orignal one which also containts all the data manipulation sheets to prepare the WaDE tables 
+This [excel file][3] is a copy of the original one which also contains all the data manipulation sheets to prepare the WaDE tables 
 
 [3]:https://github.com/WSWCWaterDataExchange/DataMigrationScripts/tree/master/Alaska/Prepareation_files
 
