@@ -1,4 +1,4 @@
-### Use the follwoing commands to empty the WaDE tables from any sample data or unneeded data. 
+### Use the following commands to empty the WaDE tables from any sample data or unneeded data. 
 
 #### How?
 In pgAdmin, first connect to the WaDE database instance you want to work with. click at "Plugins" tab, then PSQL Console. A terminal window will show up and should have the same name of the db you're working on. copy all the commands below and paste them into the terminal. 
