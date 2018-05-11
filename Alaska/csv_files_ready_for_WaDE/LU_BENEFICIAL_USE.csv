@@ -1,0 +1,10 @@
+LU_SEQ_NO,CONTEXT,VALUE,DESCRIPTION,STATE,LAST_CHANGE_DATE,RETIRED_FLAG
+1,AKDNR,WSPC,Water Supply - Public (Municipal) Community,55,,
+2,AKDNR,FWRC,Fish & Wildlife - Research & Conservation,55,,
+3,AKDNR,OGPR,Oil & Gas - Petroleum Refining,55,,
+4,AKDNR,CRW,Commercial - Retail/Wholesale,55,,
+5,AKDNR,OGIRP,Oil & Gas - Ice Roads and Pads,55,,
+6,AKDNR,FWZ,Fish & Wildlife - Zoo,55,,
+7,AKDNR,OGO,Oil & Gas - Operation,55,,
+8,AKDNR,O, - Operation,55,,
+9,AKDNR,OGP,Oil & Gas - Pipeline,55,,
