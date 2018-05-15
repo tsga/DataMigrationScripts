@@ -1,0 +1,190 @@
+Improvements to WaDE data 
+
+1. Add the M and I data (something wrong with the underlying data)
+2. Add the acreage for iirigated areas
+
+
+STEPS
+1. In the "WaDEwre" database, go to Stored procedures, right click at "wu_UpdateWade" function and choose "Modify"
+Description: This procedure takes data from waterdata to update
+--              WaDE.  The years to update are found int the YEARS
+--              data table in waterdata.
+
+
+
+dbo.WATERDATA
+
+
+
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [WATERRESID]
+      ,[WRENAME]
+      ,[COUNTY]
+      ,[Basin]
+      ,[HistBase2010]
+      ,[Base2020]
+      ,[Base2030]
+      ,[Base2040]
+      ,[Base2050]
+      ,[Base2060]
+      ,[Base2070]
+  FROM [WaterDemand].[dbo].[Population]
+
+
+
+
+connects the Model ID and the Sub-area (one ModelID for each Sub-Area)
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [ID]
+      ,[ModelID]
+      ,[MunGrpID]
+      ,[WResID]
+      ,[Name]
+  FROM [waterdata].[dbo].[ModelMunProv]
+
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [ID]
+      ,[ModelID]
+      ,[Basin]
+      ,[BasinName]
+      ,[Subarea]
+      ,[BasinNum]
+      ,[SubareaName]
+      ,[RipIn]
+      ,[RipUp]
+      ,[RipDown]
+      ,[MnIUtahPro]
+  FROM [waterdata].[dbo].[ModelSubarea]
+
+
+
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [ID]
+      ,[RptDate]
+      ,[RptYear]
+      ,[ModelID]
+      ,[Surf1]
+      ,[Surf2]
+      ,[Surf3]
+      ,[Surf4]
+      ,[Surf5]
+      ,[Surf6]
+      ,[Surf7]
+      ,[Surf8]
+      ,[Surf9]
+      ,[Surf10]
+      ,[Surf11]
+      ,[Surf12]
+      ,[SurfAnn]
+      ,[GW1]
+      ,[GW2]
+      ,[GW3]
+      ,[GW4]
+      ,[GW5]
+      ,[GW6]
+      ,[GW7]
+      ,[GW8]
+      ,[GW9]
+      ,[GW10]
+      ,[GW11]
+      ,[GW12]
+      ,[GWAnn]
+      ,[Dep1]
+      ,[Dep2]
+      ,[Dep3]
+      ,[Dep4]
+      ,[Dep5]
+      ,[Dep6]
+      ,[Dep7]
+      ,[Dep8]
+      ,[Dep9]
+      ,[Dep10]
+      ,[Dep11]
+      ,[Dep12]
+      ,[DepAnn]
+      ,[SSIDep1]
+      ,[SSIDep2]
+      ,[SSIDep3]
+      ,[SSIDep4]
+      ,[SSIDep5]
+      ,[SSIDep6]
+      ,[SSIDep7]
+      ,[SSIDep8]
+      ,[SSIDep9]
+      ,[SSIDep10]
+      ,[SSIDep11]
+      ,[SSIDep12]
+      ,[SSIDepAnn]
+  FROM [waterdata].[dbo].[MunData]
+  order by ModelID,RptYear
+
+
+
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [ID]
+      ,[Lanum]
+      ,[Lanumnew]
+      ,[Laname]
+      ,[Subarea]
+      ,[SubName]
+      ,[Basin]
+      ,[YEAR]
+      ,[Total]
+      ,[Alfalfa]
+      ,[Pasture]
+      ,[Hay]
+      ,[Grain]
+      ,[Corn]
+      ,[Orchard]
+      ,[Sorghum]
+      ,[Turf]
+      ,[Onions]
+      ,[OtherHort]
+      ,[Potatoes]
+      ,[Berries]
+      ,[OtherVeg]
+      ,[Tomatoes]
+      ,[Beans]
+      ,[Vineyard]
+      ,[SubPast]
+      ,[SubHay]
+      ,[Safflower]
+  FROM [waterdata].[dbo].[LandUseByAreaYear]
+  ORDER BY Lanum,YEAR
+
+
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT  [ORGANIZATION_ID]
+      ,[REPORT_ID]
+      ,[REPORT_UNIT_ID]
+      ,[BENEFICIAL_USE_ID]
+      ,[SUMMARY_SEQ]
+      ,[ROW_SEQ]
+      ,[AMOUNT]
+      ,[CONSUMPTIVE_INDICATOR]
+      ,[METHOD_ID]
+      ,[START_DATE]
+      ,[END_DATE]
+  FROM [WaDEwre].[wade].[S_USE_AMOUNT]
+
+  WHERE    [ORGANIZATION_ID]='utwre' AND  [REPORT_ID]='2005_ConsumptiveUse' AND  [REPORT_UNIT_ID]='01-01-04'
+
+
+USE [WaDEwre]
+GO
+
+SELECT [WaDEwre].[XML_USE_SUMMARY] (
+   'utwre' ,
+  '2005_ConsumptiveUse' ,
+ '01-01-04')
+
+
+GO
+
+
