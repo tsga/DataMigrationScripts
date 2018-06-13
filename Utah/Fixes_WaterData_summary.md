@@ -17,7 +17,7 @@ https://water.utah.gov/DWRE/WADE/v0.2/GetSummary/GetSummary.php?loctype=HUC&loct
 
 
 
--- The text in blue below was GWDiversion. So I updated it to SurfDiversion and then rerun the view
+**The text in blue below was GWDiversion. So I updated it to SurfDiversion and then rerun the view**
 
 `CREATE VIEW [dbo].[S_USE_AMTAGSURF_HUC8]
 AS
