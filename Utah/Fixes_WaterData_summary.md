@@ -6,6 +6,8 @@
 **Solution1:** updated the WaDE_SUMMARY_USE_Gen_County and WaDE_SUMMARY_USE_Gen_HUC tables in the WaterData db. 
 The tables are missing rows that relate the Report_Type with the beneficial use of M and I which is "89". 
 
+![](https://github.com/WSWCWaterDataExchange/DataMigrationScripts/blob/master/Utah/image.png)
+
 ############################################################  
 
 ### Problem2: Surface and groundwater diversions for the County and HUC8 reporting unit type appear in WaDE have the same amount 
