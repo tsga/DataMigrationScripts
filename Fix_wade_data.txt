@@ -188,3 +188,15 @@ SELECT [WaDEwre].[XML_USE_SUMMARY] (
 GO
 
 
+USE [WaDEwre]
+GO
+
+SELECT [wade_r].[GetSummaryByLocation] (
+   'COUNTY',
+ '49005',
+  'utwre',
+  '2007_Diversion',
+  'USE')
+GO
+
+
