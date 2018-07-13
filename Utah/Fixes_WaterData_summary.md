@@ -140,11 +140,11 @@ INSERT INTO WaDEwre.wade.REPORT (ORGANIZATION_ID, REPORT_ID,
 
 ------------
 ## Query to test returning both  ConsumptiveUse and 2005_Diversion for all data types 
-`SELECT[wade_r].[XML_USE_SUMMARY] (
-   'utwre' ,
-  --'2005_ConsumptiveUse' ,
-  '2005_Diversion',
+`SELECT[wade_r].[XML_USE_SUMMARY] ( 
+   'utwre' , 
+  --'2005_ConsumptiveUse' , 
+  '2005_Diversion',  
 
- --'16010203')-- HUC Cache Valley
- '49005') --County: Cache Valley
- --'01-01-04')`
+ --'16010203')-- HUC Cache Valley 
+ '49005') --County: Cache Valley 
+ --'01-01-04')` 
