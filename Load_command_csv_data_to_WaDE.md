@@ -3,18 +3,19 @@
 
 ## Export all sheets into csvs
 
-Public Sub SaveWorksheetsAsCsv()
-Dim WS As Excel.Worksheet
-Dim SaveToDirectory As String
+``
+Public Sub SaveWorksheetsAsCsv()  
+Dim WS As Excel.Worksheet  
+Dim SaveToDirectory As String  
 
-    SaveToDirectory = "G:\Alasak_data_Mappings\Alasaka_data_csvs\"
+    SaveToDirectory = "G:\Alasak_data_Mappings\Alasaka_data_csvs\"  
 
-    For Each WS In ThisWorkbook.Worksheets
-        WS.SaveAs SaveToDirectory & WS.Name, xlCSV
-    Next
+    For Each WS In ThisWorkbook.Worksheets  
+        WS.SaveAs SaveToDirectory & WS.Name, xlCSV  
+    Next  
 
-End Sub
-
+End Sub  
+``
 
 
 
