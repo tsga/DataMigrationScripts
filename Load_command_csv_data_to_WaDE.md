@@ -27,7 +27,7 @@ TRUNCATE "WADE"."METRICS" CASCADE;
 **Command concept**  
 \COPY "WADE"."TABLE" FROM 'LocalPath\TABLE.csv' DELIMITER ',' CSV HEADER NULL''
 
-
+----------------------------
 
 \COPY "WADE"."ORGANIZATION" FROM 'G:\Alasak_data_Mappings\Alasaka_data_csvs\ORGANIZATION.csv' DELIMITER ',' CSV HEADER NULL''
 
@@ -49,9 +49,9 @@ TRUNCATE "WADE"."METRICS" CASCADE;
 
 \COPY "WADE"."METHODS" FROM 'G:\Alasak_data_Mappings\Alasaka_data_csvs\METHODS.csv' DELIMITER ',' CSV HEADER NULL''
 
-\COPY "WADE"."D_ALLOCATION_FLOW" FROM 'G:\Alasak_data_Mappings\Alasaka_data_csvs\D_ALLOCATION_FLOW.csv' DELIMITER ',' CSV HEADER NULL''
-
 \COPY "WADE"."DETAIL_ALLOCATION" FROM 'G:\Alasak_data_Mappings\Alasaka_data_csvs\DETAIL_ALLOCATION.csv' DELIMITER ',' CSV HEADER NULL''
+
+\COPY "WADE"."D_ALLOCATION_FLOW" FROM 'G:\Alasak_data_Mappings\Alasaka_data_csvs\D_ALLOCATION_FLOW.csv' DELIMITER ',' CSV HEADER NULL''
 
 \COPY "WADE"."D_ALLOCATION_LOCATION" FROM 'G:\Alasak_data_Mappings\Alasaka_data_csvs\D_ALLOCATION_LOCATION.csv' DELIMITER ',' CSV HEADER NULL''
 
