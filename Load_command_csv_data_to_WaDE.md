@@ -1,5 +1,23 @@
 ### Use the following commands to upload prepared csv tables into a WaDE database on a remote server
 
+
+## Export all sheets into csvs
+
+Public Sub SaveWorksheetsAsCsv()
+Dim WS As Excel.Worksheet
+Dim SaveToDirectory As String
+
+    SaveToDirectory = "G:\Alasak_data_Mappings\Alasaka_data_csvs\"
+
+    For Each WS In ThisWorkbook.Worksheets
+        WS.SaveAs SaveToDirectory & WS.Name, xlCSV
+    Next
+
+End Sub
+
+
+
+
 #### How?
 In pgAdmin, first connect to the WaDE database instance you want to work with. click at "Plugins" tab, then PSQL Console. A terminal window will show up and should have the same name of the db you're working on. Copy each commands below one-at-a-time and paste it into the terminal. 
 You may paste all of them at once but its likely you will face errors due to mistakes in preparing the data. So its better to load them seperartly and see which one might have errors that violoate the database constriants. 
