@@ -1,5 +1,5 @@
 LU_SEQ_NO,CONTEXT,VALUE,DESCRIPTION,STATE,LAST_CHANGE_DATE,RETIRED_FLAG
-1,AKDNR,TWUP,Temporary Water Use Permit,55,,
-2,AKDNR,TWUA,Temporary Water Use Authorization,55,,
-3,AKDNR,LAS,Land Administration System,55,,
-4,AKDNR,ADL,LAS equivalent pre 1982,55,,
+1,AKDNR,TWUP,Temporary Water Use Permit,AK,,
+2,AKDNR,TWUA,Temporary Water Use Authorization,AK,,
+3,AKDNR,LAS,Land Administration System,AK,,
+4,AKDNR,ADL,LAS equivalent pre 1982,AK,,
