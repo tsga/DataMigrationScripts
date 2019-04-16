@@ -1,5 +1,9 @@
---This document describes the specific columns of data that were mapped from the Utah Division of Water Rights water right GIS attribute tables to the WaDE database schema. It is provided to assist DWRT staff as they implement the WaDE database. Simply modify any occurrences of [UTDWR] with the native database and run this document as a SQL script to create the WaDE database tables.
---DETAIL_ALLOCATION - The master table for water rights data. Includes the unique identifier for the permit/water right, the owner, and the legal status
+--This document describes the specific columns of data that were mapped from the Utah Division of Water Rights water right GIS 
+-- attribute tables to the WaDE database schema. It is provided to assist DWRT staff as they implement the WaDE database. 
+-- Simply modify any occurrences of [UTDWR] with the native database and run this document as a SQL script to create the 
+-- WaDE database tables.
+--DETAIL_ALLOCATION - The master table for water rights data. Includes the unique identifier for the permit/water right, 
+-- the owner, and the legal status
 USE [UTDWR]
 GO
 /****** Object:  View [dbo].[vw_WADE_DETAIL_ALLOCATION]    Script Date: 3/23/2016 8:03:57 AM ******/
@@ -14,7 +18,10 @@ SELECT
 	CAST('2015' AS varchar(35)) AS "REPORT_ID",
 	CAST([WRNUM] AS varchar(60)) AS "ALLOCATION_ID",
 	CAST([OWNER] AS varchar(100)) AS "ALLOCATION_OWNER",
---SOME OF THE DATES IN THE WATER RIGHTS TABLE ARE NOT VALID DATE DATATYPES FOR A POSTGRES DATABASE, SO THEY WERE MODIFIED TO A DEGREE SO THAT THEY COULD SUPPORT THE DEMONSTRATION PORTAL THAT I SHOWED TO JAMES. AN EXAMPLE IS MODIFYING A DATE OF "18650000" TO "18650101" OR ADJUSTING "1900" TO SAY "19000101". THESE MAY NOT NEED ANY MODIFICATION IF YOU ARE MIGRATING DATA FROM YOUR NATIVE MSSQL DATABASE TO THE MSSQL VERSION OF THE WADE DATABASE.
+--SOME OF THE DATES IN THE WATER RIGHTS TABLE ARE NOT VALID DATE DATATYPES FOR A POSTGRES DATABASE, 
+--SO THEY WERE MODIFIED TO A DEGREE SO THAT THEY COULD SUPPORT THE DEMONSTRATION PORTAL THAT I SHOWED TO JAMES. 
+--AN EXAMPLE IS MODIFYING A DATE OF "18650000" TO "18650101" OR ADJUSTING "1900" TO SAY "19000101". 
+--THESE MAY NOT NEED ANY MODIFICATION IF YOU ARE MIGRATING DATA FROM YOUR NATIVE MSSQL DATABASE TO THE MSSQL VERSION OF THE WADE DATABASE.
 		CASE 
 		   WHEN LEN([PRIORITY]) = 4 THEN CONCAT([PRIORITY], '0101')
 		   WHEN LEN([PRIORITY]) = 6 THEN CONCAT([PRIORITY], '01')
@@ -39,7 +46,8 @@ SELECT
 FROM      UTDWR.DBO.Water_Rights_GIS
 GO
 
---D_ALLOCATION_LOCATION - This table ties the water rights records to location information using the water right/permit unique identifier.
+--D_ALLOCATION_LOCATION - This table ties the water rights records to location information 
+--using the water right/permit unique identifier.
 USE [UTDWR]
 GO
 /****** Object:  View [dbo].[vw_WADE_ALLOCATION_LOCATION]    Script Date: 3/23/2016 9:50:42 AM ******/
