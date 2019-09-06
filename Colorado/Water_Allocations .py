@@ -6,12 +6,12 @@ import os
 import beneficialUseDictionary
 
 """
--2 find no-loop approach
+#find no-loop approach
 Comments from Adel
--1) AllocationAmount/Allocation maximum empty cells -- one of them empty is acceptable but not both
-1) we want to get the unique sites here. so could you filter the whole table based on a unique combination of site ID, SiteName, and SiteType?
+1) AllocationAmount/Allocation maximum empty cells -- one of them empty is acceptable but not both
 2) We probably need to drop the sites with no long and lat. (could you add a code for that and we'll decide to keep it or comment it out later)?
-3) could you hard code "Unknown" for SuteTypeCV value if it is missing?
+3) we want to get the unique sites here. so could you filter the whole table based on a unique combination of site ID, SiteName, and SiteType?
+4) could you hard code "Unknown" for SiteTypeCV value if it is missing?
 """
 
 workingDir="C:/Tseganeh/0WaDE/"
@@ -157,6 +157,17 @@ for ix in range(len(df100.index)):
             pass
 #outdf100.AllocationMaximum = df100.AllocationMaximum
 #direct copy
+""" 
+AllocationAmount/Allocation maximum empty cells -- one of them empty is acceptable but not both
+==> find if both Allocation amount and Allocation maximum are empty 
+==> and delete row :drop
+==> save row to a Allocations_missing.csv
+"""
+df100purge = df100.loc[df100["AllocationAmount"] == 0 & df["AllocationMaximum"] == 0]
+if(len(df100purge.index) > 0):
+    df100purge.to_csv('Allocations_missing.csv')    #index=False,
+    dropIndex = df100.loc[df100["AllocationAmount"] == 0 & df["AllocationMaximum"] == 0].index
+    df100.drop(dropIndex, inplace=True)
 """
 outdf100.SiteID = df100['SiteIDVar']
 outdf100.WaterSourceID = df100['WaterSourceID']
