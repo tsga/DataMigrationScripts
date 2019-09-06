@@ -169,7 +169,6 @@ outdf100.AllocationLegalStatusCV = df100.AllocationLegalStatusCV
 outdf100.AllocationAmount = df100.AllocationAmount
 outdf100.AllocationMaximum = df100.AllocationMaximum
 """
-outdf100.AllocationPriorityDate = df100['Appropriation Date']
 destCols=["SiteID","WaterSourceID","BeneficialUseID","NativeAllocationID","AllocationOwner","AllocationApplicationDate",
              "AllocationPriorityDate","AllocationLegalStatusCV","AllocationAmount","AllocationMaximum"]
 sourCols=["SiteIDVar","WaterSourceID","BeneficialUseID","NativeAllocationID","Structure Name","Appropriation Date",
