@@ -5,15 +5,6 @@ from sodapy import Socrata
 import os
 import beneficialUseDictionary
 
-"""
-#find no-loop approach
-Comments from Adel
-1) AllocationAmount/Allocation maximum empty cells -- one of them empty is acceptable but not both
-2) We probably need to drop the sites with no long and lat. (could you add a code for that and we'll decide to keep it or comment it out later)?
-3) we want to get the unique sites here. so could you filter the whole table based on a unique combination of site ID, SiteName, and SiteType?
-4) could you hard code "Unknown" for SiteTypeCV value if it is missing?
-"""
-
 workingDir="C:/Tseganeh/0WaDE/"
 os.chdir(workingDir)
 
@@ -157,17 +148,6 @@ for ix in range(len(df100.index)):
             pass
 #outdf100.AllocationMaximum = df100.AllocationMaximum
 #direct copy
-""" 
-AllocationAmount/Allocation maximum empty cells -- one of them empty is acceptable but not both
-==> find if both Allocation amount and Allocation maximum are empty 
-==> and delete row :drop
-==> save row to a Allocations_missing.csv
-"""
-df100purge = df100.loc[df100["AllocationAmount"] == 0 & df["AllocationMaximum"] == 0]
-if(len(df100purge.index) > 0):
-    df100purge.to_csv('Allocations_missing.csv')    #index=False,
-    dropIndex = df100.loc[df100["AllocationAmount"] == 0 & df["AllocationMaximum"] == 0].index
-    df100.drop(dropIndex, inplace=True)
 """
 outdf100.SiteID = df100['SiteIDVar']
 outdf100.WaterSourceID = df100['WaterSourceID']
@@ -192,8 +172,30 @@ outdf100.MethodID = "CODWR-DiversionTracking"
 outdf100.AllocationBasisCV = "Unknown"
 outdf100.TimeframeStart = "01/01"
 outdf100.TimeframeEnd = "12/31"
+""" 
+Comment from Adel
+1) AllocationAmount/Allocation maximum empty cells -- one of them empty is acceptable but not both
+==> find if both Allocation amount and Allocation maximum are empty 
+==> and delete row :drop
+==> save row to a Allocations_missing.csv
+"""
+#outdf100 = outdf100.replace('', np.nan) #replace blank strings by NaN
+outdf100purge = outdf100.loc[(outdf100["AllocationAmount"].isnull()) & (outdf100["AllocationMaximum"].isnull())]
+if(len(outdf100purge.index) > 0):
+    outdf100purge.to_csv('Allocations_missing.csv')    #index=False,
+    dropIndex = outdf100.loc[(outdf100["AllocationAmount"].isnull()) & (outdf100["AllocationMaximum"].isnull())].index
+    outdf100 = outdf100.drop(dropIndex)
+    outdf100 = outdf100.reset_index(drop=True)
 
+#drop duplicate rows; just make sure
+outdf100Duplicated=outdf100.loc[outdf100.duplicated()]
+if(len(outdf100Duplicated.index) > 0):
+    outdf100Duplicated.to_csv('Allocations_duplicaterows.csv')  # index=False,
+    outdf100.drop_duplicates(inplace=True)   #
+    outdf100 = outdf100.reset_index(drop=True)
+#remove duplicate index
+#outdf100[~outdf100.index.duplicated()]
 #write out
-outdf100.to_csv(allocCSV)    #index=False,
+outdf100.to_csv(allocCSV) #, index=False)
 
 print("done Water Allocation")
