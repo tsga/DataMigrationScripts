@@ -49,7 +49,14 @@ outdf100.MethodTypeCV = 'Water withdrawals'
 #outdf100.DataQualityValueCV
 #outdf100.DataConfidenceValue
 """
-#9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
+
+#9.10.19 add UUID for dim tables
+# no-loop approach?
+#OrgID and the method name
+for ix in range(len(outdf100.index)):
+    outdf100.loc[ix, 'MethodUUID'] = "_".join(["CODWR",str(outdf100.loc[ix, 'MethodName'])])
+
+    #9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
 requiredCols=['MethodUUID', 'MethodName', 'MethodDescription','ApplicableResourceTypeCV','MethodTypeCV']
 #replace blank strings by NaN, if there are any
 outdf100 = outdf100.replace('', np.nan)

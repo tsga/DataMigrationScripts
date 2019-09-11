@@ -55,13 +55,18 @@ outdf100.WaterQualityIndicatorCV = 'Unknown'
 #outdf100.GNISFeatureNameCV
 #outdf100.Geometry
 
+#9.10.19 add UUID for dim tables
+# no-loop approach?
+#native source identifer and the organization univeral id
+for ix in range(len(outdf100.index)):
+    outdf100.loc[ix, 'WaterSourceUUID'] = "_".join(["CODWR",str(outdf100.loc[ix, 'WaterSourceNativeID'])])
+
 #9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
 #'WaterSourceNativeID',
-requiredCols=['WaterSourceUUID', 'WaterSourceTypeCV','WaterQualityIndicatorCV']
+requiredCols=['WaterSourceUUID', 'WaterSourceTypeCV', 'WaterQualityIndicatorCV']
 #replace blank strings by NaN, if there are any
 outdf100 = outdf100.replace('', np.nan)
-#any cell of these columns is null
-#outdf100_nullMand = outdf100.loc[outdf100.isnull().any(axis=1)] --for all cols
+#outdf100_nullMand = outdf100.loc[outdf100.isnull().any(axis=1)] --for all cols#any cell of these columns is null
 #(outdf100["WaterSourceNativeID"].isnull()) |
 outdf100_nullMand = outdf100.loc[(outdf100["WaterSourceUUID"].isnull()) | (outdf100["WaterSourceTypeCV"].isnull()) |
                                 (outdf100["WaterQualityIndicatorCV"].isnull())]

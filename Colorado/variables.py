@@ -49,16 +49,20 @@ outdf100.AmountUnitCV = 'CFS'
 outdf100.MaximumAmountUnitCV = 'AFY'
 """
 
+#9.10.19 add UUID for dim tables
+# no-loop approach?
+#OrgID and the varspec cv
+for ix in range(len(outdf100.index)):
+    outdf100.loc[ix, 'VariableSpecificUUID'] = "_".join(["CODWR",str(outdf100.loc[ix, 'VariableSpecificCV'])])
+
 #9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
-#'VariableSpecificUUID',
-requiredCols=['VariableSpecificCV', 'VariableCV', 'AggregationStatisticCV', 'AggregationInterval',
+requiredCols=['VariableSpecificUUID','VariableSpecificCV', 'VariableCV', 'AggregationStatisticCV', 'AggregationInterval',
               'AggregationIntervalUnitCV', 'ReportYearStartMonth', 'ReportYearTypeCV', 'AmountUnitCV']
 #replace blank strings by NaN, if there are any
 outdf100 = outdf100.replace('', np.nan)
 #any cell of these columns is null
 #outdf100_nullMand = outdf100.loc[outdf100.isnull().any(axis=1)] --for all cols
-#(outdf100["VariableSpecificUUID"].isnull()) |
-outdf100_nullMand = outdf100.loc[(outdf100["VariableSpecificCV"].isnull()) |
+outdf100_nullMand = outdf100.loc[(outdf100["VariableSpecificUUID"].isnull()) | (outdf100["VariableSpecificCV"].isnull()) |
                                 (outdf100["VariableCV"].isnull()) | (outdf100["AggregationStatisticCV"].isnull()) |
                                 (outdf100["AggregationInterval"].isnull()) | (outdf100["AggregationIntervalUnitCV"].isnull()) |
                                 (outdf100["ReportYearStartMonth"].isnull()) | (outdf100["ReportYearTypeCV"].isnull()) |

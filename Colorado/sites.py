@@ -87,6 +87,11 @@ outdf100.loc[outdf100['SiteTypeCV'].isnull(),'SiteTypeCV']='Unknown'
 #hardcoded
 outdf100.EPSGCodeCV = 'EPSG:4326'
 
+#9.10.19 add UUID for dim tables
+# no-loop approach?
+for ix in range(len(outdf100.index)):
+    outdf100.loc[ix, 'SiteUUID'] = "_".join(["CODWR",str(outdf100.loc[ix, 'SiteNativeID'])])
+
 #9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
 #'SiteNativeID',
 requiredCols=['SiteUUID', 'SiteName', 'CoordinateMethodCV', 'EPSGCodeCV']

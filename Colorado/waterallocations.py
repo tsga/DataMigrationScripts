@@ -43,7 +43,8 @@ outdf100=pd.DataFrame(columns=columns)
 
 #ToDO: append 'CODWR'
 #outdf100.SiteIDVar = df100.WDID
-df100 = df100.assign(SiteIDVar=np.nan)
+df100 = df100.assign(SiteIDVar=np.nan)  #add new column and make is nan
+# no-loop approach?
 for ix in range(len(df100.index)):
     df100.loc[ix, 'SiteIDVar'] = "_".join(["CODWR",str(df100.loc[ix, 'WDID'])])
 #outdf100.SiteID = df100['SiteIDVar']
