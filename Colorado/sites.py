@@ -38,7 +38,7 @@ df = pd.read_csv(fileInput)
 df100 = df.head(100)
 
 #WaDE columns
-columns=['SiteNativeID', 'SiteName', 'USGSSiteID', 'SiteTypeCV', 'Longitude_x', 'Latitude_y',
+columns=['SiteUUID', 'SiteNativeID', 'SiteName', 'USGSSiteID', 'SiteTypeCV', 'Longitude_x', 'Latitude_y',
           'SitePoint', 'SiteNativeURL', 'Geometry', 'CoordinateMethodCV', 'CoordinateAccuracy', 'GNISCodeCV',
           'EPSGCodeCV', 'NHDNetworkStatusCV', 'NHDProductCV', 'NHDUpdateDate', 'NHDReachCode', 'NHDMeasureNumber',
           'StateCV']
@@ -88,8 +88,22 @@ outdf100.loc[outdf100['SiteTypeCV'].isnull(),'SiteTypeCV']='Unknown'
 outdf100.EPSGCodeCV = 'EPSG:4326'
 
 #9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
-requiredCols=['SiteNativeID', 'SiteName', 'SiteTypeCV', 'Longitude_x', 'Latitude_y', 'CoordinateMethodCV', 'GNISCodeCV']
+#'SiteNativeID',
+requiredCols=['SiteUUID', 'SiteName', 'CoordinateMethodCV', 'EPSGCodeCV']
+#replace blank strings by NaN, if there are any
+outdf100 = outdf100.replace('', np.nan)
+#any cell of these columns is null
+#outdf100_nullMand = outdf100.loc[outdf100.isnull().any(axis=1)] --for all cols
+#(outdf100["SiteNativeID"].isnull()) |
+outdf100_nullMand = outdf100.loc[(outdf100["SiteUUID"].isnull()) |
+                                (outdf100["SiteName"].isnull()) | (outdf100["CoordinateMethodCV"].isnull()) |
+                                (outdf100["EPSGCodeCV"].isnull())]
+#outdf100_nullMand = outdf100.loc[[False | (outdf100[varName].isnull()) for varName in requiredCols]]
+if(len(outdf100_nullMand.index) > 0):
+    outdf100_nullMand.to_csv('sites_mandatoryFieldMissing.csv')  # index=False,
+#ToDO: purge these cells if there is any missing? #For now left to be inspected
 
+#write out
 outdf100.to_csv(siteCSV, index=False)
 
 print("Done sites")

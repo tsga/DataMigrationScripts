@@ -28,7 +28,7 @@ df = pd.read_csv(fileInput)
 df100 = df.head(100)
 
 #WaDE columns
-columns=['MethodName', 'MethodDescription', 'MethodNEMILink', 'ApplicableResourceTypeCV',
+columns=['MethodUUID', 'MethodName', 'MethodDescription', 'MethodNEMILink', 'ApplicableResourceTypeCV',
          'MethodTypeCV', 'DataCoverageValue', 'DataQualityValueCV',	'DataConfidenceValue']
 dtypesx = ['BigInt	NVarChar(250)	NVarChar(50)	Text	NVarChar(100)	NVarChar(100)	NVarChar(50)',
            'NVarChar(100)	NVarChar(50)	NVarChar(50)']
@@ -49,7 +49,21 @@ outdf100.MethodTypeCV = 'Water withdrawals'
 #outdf100.DataQualityValueCV
 #outdf100.DataConfidenceValue
 """
+#9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
+requiredCols=['MethodUUID', 'MethodName', 'MethodDescription','ApplicableResourceTypeCV','MethodTypeCV']
+#replace blank strings by NaN, if there are any
+outdf100 = outdf100.replace('', np.nan)
+#any cell of these columns is null
+#outdf100_nullMand = outdf100.loc[outdf100.isnull().any(axis=1)] --for all cols
+outdf100_nullMand = outdf100.loc[(outdf100["MethodUUID"].isnull()) | (outdf100["MethodName"].isnull()) |
+                                (outdf100["MethodDescription"].isnull()) | (outdf100["ApplicableResourceTypeCV"].isnull()) |
+                                (outdf100["MethodTypeCV"].isnull())]
+#outdf100_nullMand = outdf100.loc[[False | (outdf100[varName].isnull()) for varName in requiredCols]]
+if(len(outdf100_nullMand.index) > 0):
+    outdf100_nullMand.to_csv('methods_mandatoryFieldMissing.csv')  # index=False,
+#ToDO: purge these cells if there is any missing? #For now left to be inspected
 
+#write out
 outdf100.to_csv(MethodsCSV, index=False)
 
 print("Done methods")

@@ -197,8 +197,19 @@ if(len(outdf100Duplicated.index) > 0):
 #outdf100[~outdf100.index.duplicated()]
 
 #9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
-requiredCols=["SiteID","WaterSourceID","BeneficialUseID","NativeAllocationID","AllocationOwner","AllocationApplicationDate",
-             "AllocationPriorityDate","AllocationLegalStatusCV","AllocationAmount","AllocationMaximum"]
+#"SiteID",
+requiredCols=["OrganizationUID","VariableSpecificUID","WaterSourceID","MethodID", "AllocationPriorityDate"]
+outdf100 = outdf100.replace('', np.nan) #replace blank strings by NaN, if there are any
+#any cell of these columns is null
+#outdf100_nullMand = outdf100.loc[outdf100.isnull().any(axis=1)] --for all cols
+#(outdf100["SiteID"].isnull()) |
+outdf100_nullMand = outdf100.loc[(outdf100["OrganizationUID"].isnull()) |
+                                (outdf100["VariableSpecificUID"].isnull()) | (outdf100["WaterSourceID"].isnull()) |
+                                (outdf100["MethodID"].isnull()) |  (outdf100["AllocationPriorityDate"].isnull())]
+#outdf100_nullMand = outdf100.loc[[False | (outdf100[varName].isnull()) for varName in requiredCols]]
+if(len(outdf100_nullMand.index) > 0):
+    outdf100_nullMand.to_csv('waterallocations_mandatoryFieldMissing.csv')  # index=False,
+#ToDO: purge these cells if there is any missing? #For now left to be inspected
 
 #write out
 outdf100.to_csv(allocCSV, index=False)

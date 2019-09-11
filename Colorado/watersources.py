@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pandas as pd
+import numpy as np
 from sodapy import Socrata
 import os
 
@@ -28,7 +29,7 @@ varCSV="variables.csv"
 df = pd.read_csv(fileInput)
 df100 = df.head(100)
 
-columns=['WaterSourceNativeID',	'WaterSourceName', 'WaterSourceTypeCV',
+columns=['WaterSourceUUID', 'WaterSourceNativeID',	'WaterSourceName', 'WaterSourceTypeCV',
          'WaterQualityIndicatorCV',	'GNISFeatureNameCV', 'Geometry']
 
 dtypesx = ['BigInt	NVarChar(250)	NVarChar(250)	NVarChar(250)	NVarChar(100)	NVarChar(100)',
@@ -55,8 +56,21 @@ outdf100.WaterQualityIndicatorCV = 'Unknown'
 #outdf100.Geometry
 
 #9.9.19: Adel: check all 'required' (not NA) columns have value (not empty)
-requiredCols=['WaterSourceNativeID','WaterSourceName']
+#'WaterSourceNativeID',
+requiredCols=['WaterSourceUUID', 'WaterSourceTypeCV','WaterQualityIndicatorCV']
+#replace blank strings by NaN, if there are any
+outdf100 = outdf100.replace('', np.nan)
+#any cell of these columns is null
+#outdf100_nullMand = outdf100.loc[outdf100.isnull().any(axis=1)] --for all cols
+#(outdf100["WaterSourceNativeID"].isnull()) |
+outdf100_nullMand = outdf100.loc[(outdf100["WaterSourceUUID"].isnull()) | (outdf100["WaterSourceTypeCV"].isnull()) |
+                                (outdf100["WaterQualityIndicatorCV"].isnull())]
+#outdf100_nullMand = outdf100.loc[[False | (outdf100[varName].isnull()) for varName in requiredCols]]
+if(len(outdf100_nullMand.index) > 0):
+    outdf100_nullMand.to_csv('watersources_mandatoryFieldMissing.csv')  # index=False,
+#ToDO: purge these cells if there is any missing? #For now left to be inspected
 
+#write out
 outdf100.to_csv(WSdimCSV, index=False)
 
 print("Done watersources")
